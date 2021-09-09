@@ -75,7 +75,7 @@ const toastWarning = () => {
 const getGasValues = async () => {
   try {
     const response = await fetch(
-      'https://ethgasstation.info/api/ethgasAPI.json?api-key=025b0876eb0a85ae64db5842f45cbacbec4a496f8dc46d5d10096fc8ab03',
+      'https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=25JHHF5BPJGHGBHYY9JVGJGV2EVM6BSJAR',
     );
     const json = await response.json();
     return json;
@@ -127,9 +127,9 @@ export default function App() {
           ) {
             if (
               parseInt(limit, 10) !== 0 &&
-              result[typeof selected !== 'undefined' ? selected : 'safeLow'] /
-                10 <
-                limit
+              result.result[
+                typeof selected !== undefined ? selected : 'SafeGasPrice'
+              ] < parseInt(limit, 10)
             ) {
               PushNotification.localNotification({
                 message: `Gas is lower than ${limit} gwei`,
@@ -160,20 +160,20 @@ export default function App() {
         .then(result => {
           setGas({
             fastGas: {
-              gwei: result.fast / 10,
-              time: result.fastWait,
+              gwei: result.result.FastGasPrice,
+              time: 0,
             },
             instantGas: {
-              gwei: result.fastest / 10,
-              time: result.fastestWait,
+              gwei: 0,
+              time: 0,
             },
             normalGas: {
-              gwei: result.average / 10,
-              time: result.avgWait,
+              gwei: result.result.ProposeGasPrice,
+              time: 0,
             },
             slowGas: {
-              gwei: result.safeLow / 10,
-              time: result.safeLowWait,
+              gwei: result.result.SafeGasPrice,
+              time: 0,
             },
           });
         })
@@ -231,11 +231,11 @@ export default function App() {
           <Text style={styles.gwei}>{gas.fastGas.gwei} gwei</Text>
           <Text style={styles.time}>{`< ${gas.fastGas.time} minutes`}</Text>
         </View>
-        <View style={styles.gasContainer}>
+        {/* <View style={styles.gasContainer}>
           <Text style={styles.title}>INSTANT</Text>
           <Text style={styles.gwei}>{gas.instantGas.gwei} gwei</Text>
           <Text style={styles.time}>{`< ${gas.instantGas.time} minutes`}</Text>
-        </View>
+        </View> */}
         <Pressable
           onPress={() => {
             setModalVisible(!modalVisible);

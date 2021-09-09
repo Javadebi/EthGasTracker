@@ -16,7 +16,7 @@ const ModalPicker: FC<ModalPickerProps> = ({
   setIsSet,
   setModalVisible,
 }) => {
-  const [selectedValue, setSelectedValue] = useState('safeLow');
+  const [selectedValue, setSelectedValue] = useState('SafeGasPrice');
   const [smallerNumber, setSmallerNumber] = useState('');
   // const [biggerNumber, setBiggerNumber] = useState("");
   return (
@@ -43,10 +43,10 @@ const ModalPicker: FC<ModalPickerProps> = ({
                 }}
                 style={styles.picker}
                 mode="dropdown">
-                <Picker.Item label="Slow" value="safeLow" />
-                <Picker.Item label="Normal" value="average" />
-                <Picker.Item label="Fast" value="fast" />
-                <Picker.Item label="Instant" value="fastest" />
+                <Picker.Item label="Slow" value="SafeGasPrice" />
+                <Picker.Item label="Normal" value="ProposeGasPrice" />
+                <Picker.Item label="Fast" value="FastGasPrice" />
+                {/* <Picker.Item label="Instant" value="fastest" /> */}
               </Picker>
             </View>
             <Text style={styles.buttonText}>{'<'}</Text>
